@@ -13,6 +13,7 @@ set(
 	DBusTestRunner.h
 	DBusService.h
 	QProcessDBusService.h
+	SuicidalProcess.h
 )
 
 add_library(

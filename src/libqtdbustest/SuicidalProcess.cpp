@@ -22,17 +22,23 @@
 
 namespace QtDBusTest {
 
-SuicidalProcess::SuicidalProcess() {
+class SuicidalProcessPrivate {
+public:
+	QProcess m_watchdog;
+};
+
+SuicidalProcess::SuicidalProcess(QObject *parent) :
+		QProcess(parent), d(new SuicidalProcessPrivate()) {
 	connect(this, SIGNAL(started()), this, SLOT(setSuicidal()));
 }
 
 SuicidalProcess::~SuicidalProcess() {
-	m_watchdog.kill();
-	m_watchdog.waitForFinished();
+	d->m_watchdog.kill();
+	d->m_watchdog.waitForFinished();
 }
 
 void SuicidalProcess::setSuicidal() {
-	m_watchdog.start(QTDBUSTEST_WATCHDOG_BIN,
+	d->m_watchdog.start(QTDBUSTEST_WATCHDOG_BIN,
 			QStringList() << QString::number(QCoreApplication::applicationPid())
 					<< QString::number(pid()));
 }

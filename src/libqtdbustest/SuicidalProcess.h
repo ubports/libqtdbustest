@@ -23,17 +23,20 @@
 
 namespace QtDBusTest {
 
-class SuicidalProcess: public QProcess {
+class SuicidalProcessPrivate;
+
+class Q_DECL_EXPORT SuicidalProcess: public QProcess {
+Q_OBJECT
 public:
-	SuicidalProcess();
+	explicit SuicidalProcess(QObject *parent = 0);
 
 	virtual ~SuicidalProcess();
 
 protected Q_SLOTS:
 	virtual void setSuicidal();
 
-protected:
-	QProcess m_watchdog;
+private:
+	QScopedPointer<SuicidalProcessPrivate> d;
 };
 
 } /* namespace QtDBusTest */
