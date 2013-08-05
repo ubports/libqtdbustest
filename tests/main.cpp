@@ -21,11 +21,6 @@
 #include <QCoreApplication>
 #include <gtest/gtest.h>
 
-#include <InitGlib.h>
-#include <libqtdbusmock/DBusMock.h>
-
-using namespace QtDBusMock;
-
 int main(int argc, char **argv) {
 	qputenv("LANG", "C.UTF-8");
 	unsetenv("LC_ALL");
@@ -35,9 +30,6 @@ int main(int argc, char **argv) {
 	textdomain(GETTEXT_PACKAGE);
 
 	QCoreApplication application(argc, argv);
-	InitGlib::init();
-
-	DBusMock::registerMetaTypes();
 
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
