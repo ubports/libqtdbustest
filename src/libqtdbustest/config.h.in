@@ -16,10 +16,10 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
-#ifndef CONFIG_H_
-#define CONFIG_H_
+#ifndef LIBQTDBUSTEST_CONFIG_H_
+#define LIBQTDBUSTEST_CONFIG_H_
 
 #define DBUS_SYSTEM_CONFIG_FILE "@DBUS_SYSTEM_CONFIG_FILE@"
 #define DBUS_SESSION_CONFIG_FILE "@DBUS_SESSION_CONFIG_FILE@"
 
-#endif // CONFIG_H_
+#endif // LIBQTDBUSTEST_CONFIG_H_

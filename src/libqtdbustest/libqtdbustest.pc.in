@@ -3,7 +3,7 @@ includedir=@CMAKE_INSTALL_FULL_INCLUDEDIR@
 
 Cflags: -I${includedir}/libqtdbustest-@API_VERSION@
 Requires: Qt5Core
-Libs: -L${libdir} -llibqtdbustest
+Libs: -L${libdir} -lqtdbustest
 
 Name: libqtdbustest
 Description: A library to facilitate testing DBus services written in Qt/C++

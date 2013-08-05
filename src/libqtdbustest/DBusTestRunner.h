@@ -29,7 +29,7 @@ namespace QtDBusTest {
 
 class DBusTestRunnerPrivate;
 
-class DBusTestRunner {
+class Q_DECL_EXPORT DBusTestRunner {
 public:
 	explicit DBusTestRunner(const QString &dbusSessionConfigFile =
 			DBUS_SESSION_CONFIG_FILE, const QString &dbusSystemConfigFile =

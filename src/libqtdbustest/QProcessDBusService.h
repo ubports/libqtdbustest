@@ -29,7 +29,7 @@ namespace QtDBusTest {
 
 class QProcessDBusServicePrivate;
 
-class QProcessDBusService: public DBusService {
+class Q_DECL_EXPORT QProcessDBusService: public DBusService {
 public:
 	explicit QProcessDBusService(const QString &interface,
 			QDBusConnection::BusType busType, const QString &program,
