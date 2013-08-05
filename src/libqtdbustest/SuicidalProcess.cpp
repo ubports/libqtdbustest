@@ -16,11 +16,25 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
-#ifndef LIBQTDBUSTEST_CONFIG_H_
-#define LIBQTDBUSTEST_CONFIG_H_
+#include <libqtdbustest/SuicidalProcess.h>
+#include <libqtdbustest/config.h>
+#include <QCoreApplication>
 
-#define DBUS_SYSTEM_CONFIG_FILE "@DBUS_SYSTEM_CONFIG_FILE@"
-#define DBUS_SESSION_CONFIG_FILE "@DBUS_SESSION_CONFIG_FILE@"
-#define QTDBUSTEST_WATCHDOG_BIN "@QTDBUSTEST_WATCHDOG_BIN@"
+namespace QtDBusTest {
 
-#endif // LIBQTDBUSTEST_CONFIG_H_
+SuicidalProcess::SuicidalProcess() {
+	connect(this, SIGNAL(started()), this, SLOT(setSuicidal()));
+}
+
+SuicidalProcess::~SuicidalProcess() {
+	m_watchdog.kill();
+	m_watchdog.waitForFinished();
+}
+
+void SuicidalProcess::setSuicidal() {
+	m_watchdog.start(QTDBUSTEST_WATCHDOG_BIN,
+			QStringList() << QString::number(QCoreApplication::applicationPid())
+					<< QString::number(pid()));
+}
+
+} /* namespace QtDBusTest */

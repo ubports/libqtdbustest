@@ -16,11 +16,32 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
-#ifndef LIBQTDBUSTEST_CONFIG_H_
-#define LIBQTDBUSTEST_CONFIG_H_
+#ifndef LIBQTDBUSTEST_WATHDOG_H_
+#define LIBQTDBUSTEST_WATHDOG_H_
 
-#define DBUS_SYSTEM_CONFIG_FILE "@DBUS_SYSTEM_CONFIG_FILE@"
-#define DBUS_SESSION_CONFIG_FILE "@DBUS_SESSION_CONFIG_FILE@"
-#define QTDBUSTEST_WATCHDOG_BIN "@QTDBUSTEST_WATCHDOG_BIN@"
+#include <QObject>
+#include <QProcess>
+#include <QTimer>
 
-#endif // LIBQTDBUSTEST_CONFIG_H_
+namespace QtDBusTest {
+
+class Q_DECL_EXPORT Watchdog: public QObject {
+Q_OBJECT
+public:
+	Watchdog(Q_PID parentPid, Q_PID childPid);
+
+	virtual ~Watchdog();
+
+protected Q_SLOTS:
+	void timeout();
+
+protected:
+	Q_PID m_parentPid;
+
+	Q_PID m_childPid;
+
+	QTimer m_timer;
+};
+
+} /* namespace QtDBusTest */
+#endif /* LIBQTDBUSTEST_WATHDOG_H_ */

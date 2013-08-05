@@ -16,11 +16,25 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
-#ifndef LIBQTDBUSTEST_CONFIG_H_
-#define LIBQTDBUSTEST_CONFIG_H_
+#ifndef SUICIDALPROCESS_H_
+#define SUICIDALPROCESS_H_
 
-#define DBUS_SYSTEM_CONFIG_FILE "@DBUS_SYSTEM_CONFIG_FILE@"
-#define DBUS_SESSION_CONFIG_FILE "@DBUS_SESSION_CONFIG_FILE@"
-#define QTDBUSTEST_WATCHDOG_BIN "@QTDBUSTEST_WATCHDOG_BIN@"
+#include <QProcess>
 
-#endif // LIBQTDBUSTEST_CONFIG_H_
+namespace QtDBusTest {
+
+class SuicidalProcess: public QProcess {
+public:
+	SuicidalProcess();
+
+	virtual ~SuicidalProcess();
+
+protected Q_SLOTS:
+	virtual void setSuicidal();
+
+protected:
+	QProcess m_watchdog;
+};
+
+} /* namespace QtDBusTest */
+#endif /* SUICIDALPROCESS_H_ */

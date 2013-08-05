@@ -40,6 +40,7 @@ endif()
 set(LOCALE_DIR "${CMAKE_INSTALL_FULL_DATADIR}/locale")
 set(DBUS_SYSTEM_CONFIG_FILE "${CMAKE_INSTALL_FULL_DATADIR}/libqtdbustest/system.conf")
 set(DBUS_SESSION_CONFIG_FILE "${CMAKE_INSTALL_FULL_DATADIR}/libqtdbustest/session.conf")
+set(QTDBUSTEST_WATCHDOG_BIN "${CMAKE_INSTALL_FULL_LIBEXECDIR}/libqtdbustest/watchdog")
 
 add_definitions(
 	-std=c++11

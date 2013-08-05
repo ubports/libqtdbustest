@@ -16,11 +16,29 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
-#ifndef LIBQTDBUSTEST_CONFIG_H_
-#define LIBQTDBUSTEST_CONFIG_H_
+#include <watchdog/Watchdog.h>
+#include <QTimer>
+#include <QCoreApplication>
+#include <csignal>
 
-#define DBUS_SYSTEM_CONFIG_FILE "@DBUS_SYSTEM_CONFIG_FILE@"
-#define DBUS_SESSION_CONFIG_FILE "@DBUS_SESSION_CONFIG_FILE@"
-#define QTDBUSTEST_WATCHDOG_BIN "@QTDBUSTEST_WATCHDOG_BIN@"
+namespace QtDBusTest {
 
-#endif // LIBQTDBUSTEST_CONFIG_H_
+Watchdog::Watchdog(Q_PID parentPid, Q_PID childPid) :
+		m_parentPid(parentPid), m_childPid(childPid) {
+	m_timer.setInterval(1000);
+	connect(&m_timer, SIGNAL(timeout()), this, SLOT(timeout()));
+	m_timer.start();
+}
+
+Watchdog::~Watchdog() {
+}
+
+void Watchdog::timeout() {
+	// if the parent process is dead
+	if (kill(m_parentPid, 0) != 0) {
+		kill(m_childPid, SIGKILL);
+		QCoreApplication::exit(0);
+	}
+}
+
+} /* namespace QtDBusTest */

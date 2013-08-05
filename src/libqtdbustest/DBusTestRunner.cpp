@@ -17,6 +17,7 @@
  */
 
 #include <libqtdbustest/DBusTestRunner.h>
+#include <libqtdbustest/SuicidalProcess.h>
 
 namespace QtDBusTest {
 
@@ -31,13 +32,13 @@ public:
 
 	QDBusConnection m_sessionConnection;
 
-	QProcess m_sessionDBus;
+	SuicidalProcess m_sessionDBus;
 
 	QString m_systemBus;
 
 	QDBusConnection m_systemConnection;
 
-	QProcess m_systemDBus;
+	SuicidalProcess m_systemDBus;
 
 	QList<DBusServicePtr> m_services;
 };

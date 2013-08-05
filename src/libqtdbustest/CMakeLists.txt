@@ -4,6 +4,7 @@ set(
 	DBusTestRunner.cpp
 	DBusService.cpp
 	QProcessDBusService.cpp
+	SuicidalProcess.cpp
 )
 
 set(

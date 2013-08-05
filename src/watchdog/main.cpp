@@ -16,11 +16,22 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
-#ifndef LIBQTDBUSTEST_CONFIG_H_
-#define LIBQTDBUSTEST_CONFIG_H_
+#include <QCoreApplication>
+#include <QDebug>
+#include <watchdog/Watchdog.h>
 
-#define DBUS_SYSTEM_CONFIG_FILE "@DBUS_SYSTEM_CONFIG_FILE@"
-#define DBUS_SESSION_CONFIG_FILE "@DBUS_SESSION_CONFIG_FILE@"
-#define QTDBUSTEST_WATCHDOG_BIN "@QTDBUSTEST_WATCHDOG_BIN@"
+using namespace QtDBusTest;
 
-#endif // LIBQTDBUSTEST_CONFIG_H_
+int main(int argc, char **argv) {
+	QCoreApplication application(argc, argv);
+
+	if (argc != 3) {
+		qWarning() << "Usage: " << argv[0] << "PARENT_PID TARGET_ID";
+		exit(1);
+	}
+
+	Watchdog watchdog(QString::fromUtf8(argv[1]).toLongLong(),
+			QString::fromUtf8(argv[2]).toLongLong());
+
+	return application.exec();
+}
