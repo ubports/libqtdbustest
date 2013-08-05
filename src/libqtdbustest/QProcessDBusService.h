@@ -27,6 +27,8 @@
 
 namespace QtDBusTest {
 
+class QProcessDBusServicePrivate;
+
 class QProcessDBusService: public DBusService {
 public:
 	explicit QProcessDBusService(const QString &interface,
@@ -37,12 +39,8 @@ public:
 
 	virtual void start(const QDBusConnection &connection);
 
-protected:
-	QString m_program;
-
-	QStringList m_arguments;
-
-	QProcess m_process;
+private:
+	QScopedPointer<QProcessDBusServicePrivate> p;
 };
 
 }

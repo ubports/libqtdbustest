@@ -38,6 +38,8 @@ if (EXISTS "/etc/debian_version")
 endif()
 
 set(LOCALE_DIR "${CMAKE_INSTALL_FULL_DATADIR}/locale")
+set(DBUS_SYSTEM_CONFIG_FILE "${CMAKE_INSTALL_FULL_DATADIR}/libqtdbustest/system.conf")
+set(DBUS_SESSION_CONFIG_FILE "${CMAKE_INSTALL_FULL_DATADIR}/libqtdbustest/session.conf")
 
 add_definitions(
 	-std=c++11
@@ -58,8 +60,8 @@ add_definitions(
 #endif()
 
 configure_file(
-	"${SOURCE_DIR}/config.h.in"
-	"${SOURCE_BINARY_DIR}/config.h"
+	"${SOURCE_DIR}/libqtdbustest/config.h.in"
+	"${SOURCE_BINARY_DIR}/libqtdbustest/config.h"
 )
 
 

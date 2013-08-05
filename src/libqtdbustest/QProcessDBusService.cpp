@@ -22,42 +22,59 @@
 #include <QSignalSpy>
 #include <QDBusServiceWatcher>
 
-using namespace QtDBusTest;
+namespace QtDBusTest {
+
+class QProcessDBusServicePrivate {
+
+public:
+	QProcessDBusServicePrivate(const QString &program,
+			const QStringList &arguments) :
+			m_program(program), m_arguments(arguments) {
+	}
+
+	QString m_program;
+
+	QStringList m_arguments;
+
+	QProcess m_process;
+};
 
 QProcessDBusService::QProcessDBusService(const QString &interface,
 		QDBusConnection::BusType busType, const QString &program,
 		const QStringList &arguments) :
-		DBusService(interface, busType), m_program(program), m_arguments(
-				arguments) {
+		DBusService(interface, busType), p(
+				new QProcessDBusServicePrivate(program, arguments)) {
 }
 
 QProcessDBusService::~QProcessDBusService() {
-	m_process.terminate();
-	m_process.waitForFinished();
+	p->m_process.terminate();
+	p->m_process.waitForFinished();
 
 //	m_process.waitForReadyRead();
 //	qDebug() << m_process.readAll();
 }
 
 void QProcessDBusService::start(const QDBusConnection &connection) {
-	QDBusServiceWatcher watcher(m_interface, connection,
+	QDBusServiceWatcher watcher(interface(), connection,
 			QDBusServiceWatcher::WatchForRegistration);
 	QSignalSpy spy(&watcher,
 			SIGNAL(serviceOwnerChanged(const QString &,const QString &,const QString &)));
 
-	m_process.setProcessChannelMode(QProcess::MergedChannels);
-	m_process.start(m_program, m_arguments);
+	p->m_process.setProcessChannelMode(QProcess::MergedChannels);
+	p->m_process.start(p->m_program, p->m_arguments);
 
 	spy.wait();
 	if (spy.empty()) {
-		qWarning() << "Process " << m_program << " with arguments "
-				<< m_arguments << " for interface " << m_interface
+		qWarning() << "Process " << p->m_program << " with arguments "
+				<< p->m_arguments << " for interface " << interface()
 				<< "failed to start";
 	}
 	QVariantList arguments(spy.takeFirst());
-	if (m_interface != arguments.first().toString()) {
-		qWarning() << "Process " << m_program << " with arguments "
-				<< m_arguments << " for interface " << m_interface
+	if (interface() != arguments.first().toString()) {
+		qWarning() << "Process " << p->m_program << " with arguments "
+				<< p->m_arguments << " for interface " << interface()
 				<< " - incorrect service appeared";
 	}
+}
+
 }

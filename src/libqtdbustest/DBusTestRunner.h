@@ -17,6 +17,7 @@
  */
 
 #include <libqtdbustest/DBusService.h>
+#include <libqtdbustest/config.h>
 #include <QtDBus>
 #include <QMap>
 #include <QString>
@@ -26,9 +27,13 @@
 
 namespace QtDBusTest {
 
+class DBusTestRunnerPrivate;
+
 class DBusTestRunner {
 public:
-	DBusTestRunner();
+	explicit DBusTestRunner(const QString &dbusSessionConfigFile =
+			DBUS_SESSION_CONFIG_FILE, const QString &dbusSystemConfigFile =
+			DBUS_SYSTEM_CONFIG_FILE);
 
 	virtual ~DBusTestRunner();
 
@@ -44,22 +49,8 @@ public:
 
 	virtual void registerService(DBusServicePtr service);
 
-protected:
-	void startService(const DBusService &service);
-
-	QString m_sessionBus;
-
-	QDBusConnection m_sessionConnection;
-
-	QProcess m_sessionDBus;
-
-	QString m_systemBus;
-
-	QDBusConnection m_systemConnection;
-
-	QProcess m_systemDBus;
-
-	QList<DBusServicePtr> m_services;
+private:
+	QScopedPointer<DBusTestRunnerPrivate> d;
 };
 
 }

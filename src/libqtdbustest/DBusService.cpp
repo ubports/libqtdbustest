@@ -18,20 +18,35 @@
 
 #include <libqtdbustest/DBusService.h>
 
-using namespace QtDBusTest;
+namespace QtDBusTest {
+
+class DBusServicePrivate {
+
+public:
+	DBusServicePrivate(const QString &interface,
+			QDBusConnection::BusType busType) :
+			m_interface(interface), m_busType(busType) {
+	}
+
+	QString m_interface;
+
+	QDBusConnection::BusType m_busType;
+};
 
 DBusService::DBusService(const QString &interface,
 		QDBusConnection::BusType busType) :
-		m_interface(interface), m_busType(busType) {
+		d(new DBusServicePrivate(interface, busType)) {
 }
 
 DBusService::~DBusService() {
 }
 
 const QString & DBusService::interface() const {
-	return m_interface;
+	return d->m_interface;
 }
 
 QDBusConnection::BusType DBusService::busType() const {
-	return m_busType;
+	return d->m_busType;
+}
+
 }

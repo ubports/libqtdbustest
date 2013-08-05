@@ -21,10 +21,12 @@
 
 #include <QDBusConnection>
 #include <QSharedPointer>
+#include <QScopedPointer>
 
 namespace QtDBusTest {
 
 class DBusService;
+class DBusServicePrivate;
 
 typedef QSharedPointer<DBusService> DBusServicePtr;
 
@@ -40,10 +42,8 @@ public:
 
 	virtual void start(const QDBusConnection &connection) = 0;
 
-protected:
-	QString m_interface;
-
-	QDBusConnection::BusType m_busType;
+private:
+	QScopedPointer<DBusServicePrivate> d;
 };
 
 }

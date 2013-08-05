@@ -16,7 +16,7 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
-#include <config.h>
+#include <libqtdbustest/config.h>
 
 #include <QCoreApplication>
 #include <gtest/gtest.h>
@@ -25,9 +25,9 @@ int main(int argc, char **argv) {
 	qputenv("LANG", "C.UTF-8");
 	unsetenv("LC_ALL");
 
-	setlocale(LC_ALL, "");
-	bindtextdomain(GETTEXT_PACKAGE, LOCALE_DIR);
-	textdomain(GETTEXT_PACKAGE);
+//	setlocale(LC_ALL, "");
+//	bindtextdomain(GETTEXT_PACKAGE, LOCALE_DIR);
+//	textdomain(GETTEXT_PACKAGE);
 
 	QCoreApplication application(argc, argv);
 
