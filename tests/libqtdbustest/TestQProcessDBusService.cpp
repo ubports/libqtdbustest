@@ -18,7 +18,6 @@
 
 #include <libqtdbustest/QProcessDBusService.h>
 #include <libqtdbustest/DBusTestRunner.h>
-#include <QCoreApplication>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
