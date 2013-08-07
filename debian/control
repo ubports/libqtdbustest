@@ -11,6 +11,8 @@ Build-Depends: cmake,
                valgrind,
 Standards-Version: 3.9.4
 Homepage: https://launchpad.net/libqtdbustest
+# If you aren't a member of ~unity-team but need to upload packaging changes,
+# just go ahead.  ~unity-team will notice and sync up the code again.
 Vcs-Bzr: https://code.launchpad.net/~unity-team/libqtdbustest/trunk
 
 Package: libqtdbustest1
