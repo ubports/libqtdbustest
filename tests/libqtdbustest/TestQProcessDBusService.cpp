@@ -30,7 +30,9 @@ namespace {
 
 class TestQProcessDBusService: public Test {
 protected:
-	TestQProcessDBusService() {
+	TestQProcessDBusService() :
+			dbusTestRunner(TEST_DBUS_SESSION_CONFIG_FILE,
+					TEST_DBUS_SYSTEM_CONFIG_FILE) {
 	}
 
 	virtual ~TestQProcessDBusService() {
