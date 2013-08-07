@@ -39,6 +39,8 @@ public:
 
 	virtual void start(const QDBusConnection &connection);
 
+	virtual Q_PID pid() const;
+
 private:
 	QScopedPointer<QProcessDBusServicePrivate> p;
 };

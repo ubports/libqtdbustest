@@ -23,12 +23,11 @@ namespace QtDBusTest {
 class DBusServicePrivate {
 
 public:
-	DBusServicePrivate(const QString &interface,
-			QDBusConnection::BusType busType) :
-			m_interface(interface), m_busType(busType) {
+	DBusServicePrivate(const QString &name, QDBusConnection::BusType busType) :
+			m_name(name), m_busType(busType) {
 	}
 
-	QString m_interface;
+	QString m_name;
 
 	QDBusConnection::BusType m_busType;
 };
@@ -41,8 +40,8 @@ DBusService::DBusService(const QString &interface,
 DBusService::~DBusService() {
 }
 
-const QString & DBusService::interface() const {
-	return d->m_interface;
+const QString & DBusService::name() const {
+	return d->m_name;
 }
 
 QDBusConnection::BusType DBusService::busType() const {

@@ -50,12 +50,12 @@ QProcessDBusService::~QProcessDBusService() {
 	p->m_process.terminate();
 	p->m_process.waitForFinished();
 
-//	m_process.waitForReadyRead();
-//	qDebug() << m_process.readAll();
+//	p->m_process.waitForReadyRead();
+//	qDebug() << p->m_process.readAll();
 }
 
 void QProcessDBusService::start(const QDBusConnection &connection) {
-	QDBusServiceWatcher watcher(interface(), connection,
+	QDBusServiceWatcher watcher(name(), connection,
 			QDBusServiceWatcher::WatchForRegistration);
 	QSignalSpy spy(&watcher,
 			SIGNAL(serviceOwnerChanged(const QString &,const QString &,const QString &)));
@@ -65,16 +65,23 @@ void QProcessDBusService::start(const QDBusConnection &connection) {
 
 	spy.wait();
 	if (spy.empty()) {
+		p->m_process.waitForReadyRead(50);
 		qWarning() << "Process " << p->m_program << " with arguments "
-				<< p->m_arguments << " for interface " << interface()
+				<< p->m_arguments << " for service " << name()
 				<< "failed to start";
+		qWarning() << p->m_process.readAll();
+		return;
 	}
 	QVariantList arguments(spy.takeFirst());
-	if (interface() != arguments.first().toString()) {
+	if (name() != arguments.first().toString()) {
 		qWarning() << "Process " << p->m_program << " with arguments "
-				<< p->m_arguments << " for interface " << interface()
+				<< p->m_arguments << " for interface " << name()
 				<< " - incorrect service appeared";
 	}
+}
+
+Q_PID QProcessDBusService::pid() const {
+	return p->m_process.pid();
 }
 
 }

@@ -32,11 +32,11 @@ typedef QSharedPointer<DBusService> DBusServicePtr;
 
 class Q_DECL_EXPORT DBusService {
 public:
-	DBusService(const QString &interface, QDBusConnection::BusType busType);
+	DBusService(const QString &name, QDBusConnection::BusType busType);
 
 	virtual ~DBusService();
 
-	virtual const QString & interface() const;
+	virtual const QString & name() const;
 
 	virtual QDBusConnection::BusType busType() const;
 
