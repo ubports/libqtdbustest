@@ -1,5 +1,32 @@
-libqtdbustest (0.1-0ubuntu1) UNRELEASED; urgency=low
+libqtdbustest (0.1+13.10.20130809-0ubuntu1) saucy; urgency=low
 
+  [ Pete Woods ]
   * Initial version.
+  * Initial commit
+  * Pull out the dbus initialisationd and mocking into separate
+    libraries
+  * Support separate mocked session and system buses
+  * Support the whole dbusmock interface
+  * Fix support for mocking session services
+  * Add code to construct gmenumodels
+  * Create a gmenumodel and confirm it is correct by reading it back in
+    again
+  * Delete everything not related to libqtdbustest
+  * More complete install
+  * Fix copyright
+  * Fix packaging
+  * First attempt at a watchdog
+  * Add suicidal process as an API class
+  * Add first test.
+  * Enable coverage reports
 
- -- Pete Woods <pete.woods@canonical.com>  Fri, 12 Jul 2013 16:43:17 +0100
+  [ Robert Bruce Park ]
+  * Packaging fixes necessary for daily release.
+  * wrap-and-sort -a -t
+  * Packaging comment.
+  * Copyright cleanup.
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 20
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Fri, 09 Aug 2013 02:02:48 +0000
