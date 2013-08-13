@@ -17,18 +17,26 @@
  */
 
 #include <libqtdbustest/SuicidalProcess.h>
-#include <libqtdbustest/config.h>
 #include <QCoreApplication>
 
 namespace QtDBusTest {
 
 class SuicidalProcessPrivate {
 public:
+	SuicidalProcessPrivate(const QString &watchdogCommand) :
+			m_watchdogCommand(watchdogCommand) {
+	}
+
+	~SuicidalProcessPrivate() {
+	}
+
+	QString m_watchdogCommand;
+
 	QProcess m_watchdog;
 };
 
-SuicidalProcess::SuicidalProcess(QObject *parent) :
-		QProcess(parent), d(new SuicidalProcessPrivate()) {
+SuicidalProcess::SuicidalProcess(const QString &watchdog, QObject *parent) :
+		QProcess(parent), d(new SuicidalProcessPrivate(watchdog)) {
 	connect(this, SIGNAL(started()), this, SLOT(setSuicidal()));
 }
 
@@ -38,7 +46,7 @@ SuicidalProcess::~SuicidalProcess() {
 }
 
 void SuicidalProcess::setSuicidal() {
-	d->m_watchdog.start(QTDBUSTEST_WATCHDOG_BIN,
+	d->m_watchdog.start(d->m_watchdogCommand,
 			QStringList() << QString::number(QCoreApplication::applicationPid())
 					<< QString::number(pid()));
 }

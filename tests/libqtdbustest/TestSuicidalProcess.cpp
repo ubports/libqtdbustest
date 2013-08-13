@@ -16,13 +16,10 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
-#include <libqtdbustest/QProcessDBusService.h>
-#include <libqtdbustest/DBusTestRunner.h>
+#include <libqtdbustest/SuicidalProcess.h>
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-
-#include <stdexcept>
 
 using namespace std;
 using namespace testing;
@@ -30,26 +27,22 @@ using namespace QtDBusTest;
 
 namespace {
 
-class TestQProcessDBusService: public Test {
+class TestSuicidalProcess: public Test {
 protected:
-	TestQProcessDBusService() :
-			dbusTestRunner(TEST_DBUS_SESSION_CONFIG_FILE,
-					TEST_DBUS_SYSTEM_CONFIG_FILE) {
+	TestSuicidalProcess() :
+			process(TEST_QTDBUSTEST_WATCHDOG_BIN) {
 	}
 
-	virtual ~TestQProcessDBusService() {
+	virtual ~TestSuicidalProcess() {
+		process.kill();
+		process.waitForFinished();
 	}
 
-	DBusTestRunner dbusTestRunner;
+	SuicidalProcess process;
 };
 
-TEST_F(TestQProcessDBusService, WaitsForServiceAppeared) {
-	QProcessDBusService process("test.name", QDBusConnection::SessionBus,
-			"python3",
-			QStringList() << "-m" << "dbusmock" << "test.name" << "/test/object"
-					<< "test.Interface");
-
-	process.start(dbusTestRunner.sessionConnection());
+TEST_F(TestSuicidalProcess, BehavesLikeNormalQProcess) {
+	process.start("sleep", QStringList() << "5");
 
 	QProcess pgrep;
 	pgrep.start("ps",
@@ -58,17 +51,8 @@ TEST_F(TestQProcessDBusService, WaitsForServiceAppeared) {
 	pgrep.waitForFinished();
 	pgrep.waitForReadyRead();
 
-	EXPECT_EQ("python3 -m dbusmock test.name /test/object test.Interface",
+	EXPECT_EQ("sleep 5",
 			QString::fromUtf8(pgrep.readAll().trimmed()).toStdString());
-}
-
-TEST_F(TestQProcessDBusService, ThrowsErrorForFailToStart) {
-	QProcessDBusService process("test.name", QDBusConnection::SessionBus,
-			"python3",
-			QStringList() << "-m" << "dbusmock" << "not.test.name"
-					<< "/test/object" << "test.Interface");
-
-	ASSERT_THROW(process.start(dbusTestRunner.sessionConnection()), std::logic_error);
 }
 
 } // namespace

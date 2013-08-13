@@ -18,12 +18,22 @@
 
 #include <QCoreApplication>
 #include <QDebug>
+#include <csignal>
+
 #include <watchdog/Watchdog.h>
 
 using namespace QtDBusTest;
 
+static void exitQt(int sig) {
+	Q_UNUSED(sig);
+	QCoreApplication::exit(0);
+}
+
 int main(int argc, char **argv) {
 	QCoreApplication application(argc, argv);
+
+	signal(SIGINT, &exitQt);
+	signal(SIGTERM, &exitQt);
 
 	if (argc != 3) {
 		qWarning() << "Usage: " << argv[0] << "PARENT_PID TARGET_ID";
