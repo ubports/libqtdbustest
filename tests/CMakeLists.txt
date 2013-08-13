@@ -11,11 +11,14 @@ include_directories(${GTEST_INCLUDE_DIRS})
 
 add_definitions(-DTEST_DBUS_SESSION_CONFIG_FILE="${DATA_DIR}/session.conf")
 add_definitions(-DTEST_DBUS_SYSTEM_CONFIG_FILE="${DATA_DIR}/system.conf")
+add_definitions(-DTEST_QTDBUSTEST_WATCHDOG_BIN="${CMAKE_BINARY_DIR}/src/watchdog/watchdog")
 
 set(
 	UNIT_TESTS_SRC
 	main.cpp
+	libqtdbustest/TestDBusTestRunner.cpp
 	libqtdbustest/TestQProcessDBusService.cpp
+	libqtdbustest/TestSuicidalProcess.cpp
 )
 
 add_executable(

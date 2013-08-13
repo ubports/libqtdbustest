@@ -22,6 +22,8 @@
 #include <QSignalSpy>
 #include <QDBusServiceWatcher>
 
+#include <stdexcept>
+
 namespace QtDBusTest {
 
 class QProcessDBusServicePrivate {
@@ -63,20 +65,13 @@ void QProcessDBusService::start(const QDBusConnection &connection) {
 	p->m_process.setProcessChannelMode(QProcess::MergedChannels);
 	p->m_process.start(p->m_program, p->m_arguments);
 
-	spy.wait();
+	spy.wait(1000);
 	if (spy.empty()) {
 		p->m_process.waitForReadyRead(50);
-		qWarning() << "Process " << p->m_program << " with arguments "
-				<< p->m_arguments << " for service " << name()
-				<< "failed to start";
-		qWarning() << p->m_process.readAll();
-		return;
-	}
-	QVariantList arguments(spy.takeFirst());
-	if (name() != arguments.first().toString()) {
-		qWarning() << "Process " << p->m_program << " with arguments "
-				<< p->m_arguments << " for interface " << name()
-				<< " - incorrect service appeared";
+
+		QString error = "Process [" + p->m_program + "] for service [" + name()
+				+ "] failed to start:\n" + p->m_process.readAll();
+		throw std::logic_error(error.toStdString());
 	}
 }
 

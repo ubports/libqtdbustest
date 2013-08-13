@@ -20,6 +20,7 @@
 #define SUICIDALPROCESS_H_
 
 #include <QProcess>
+#include <libqtdbustest/config.h>
 
 namespace QtDBusTest {
 
@@ -31,6 +32,8 @@ public:
 	explicit SuicidalProcess(QObject *parent = 0);
 
 	virtual ~SuicidalProcess();
+
+	void setWatchdogCommand(const QString &watchdogCommand);
 
 protected Q_SLOTS:
 	virtual void setSuicidal();

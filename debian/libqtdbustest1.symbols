@@ -15,6 +15,7 @@ libqtdbustest.so.1 libqtdbustest1 #MINVER#
  (c++)"QtDBusTest::SuicidalProcess::qt_metacast(char const*)@Base" 0.1
  (c++)"QtDBusTest::SuicidalProcess::setSuicidal()@Base" 0.1
  (c++)"QtDBusTest::SuicidalProcess::staticMetaObject@Base" 0.1
+ (c++)"QtDBusTest::SuicidalProcess::setWatchdogCommand(QString const&)@Base" 0.1+13.10.20130809-0ubuntu1
  (c++)"QtDBusTest::SuicidalProcess::SuicidalProcess(QObject*)@Base" 0.1
  (c++)"QtDBusTest::SuicidalProcess::SuicidalProcess(QObject*)@Base" 0.1
  (c++)"QtDBusTest::SuicidalProcess::~SuicidalProcess()@Base" 0.1
