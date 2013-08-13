@@ -23,8 +23,8 @@ namespace QtDBusTest {
 
 class SuicidalProcessPrivate {
 public:
-	SuicidalProcessPrivate(const QString &watchdogCommand) :
-			m_watchdogCommand(watchdogCommand) {
+	SuicidalProcessPrivate() :
+			m_watchdogCommand(QTDBUSTEST_WATCHDOG_BIN) {
 	}
 
 	~SuicidalProcessPrivate() {
@@ -35,8 +35,8 @@ public:
 	QProcess m_watchdog;
 };
 
-SuicidalProcess::SuicidalProcess(const QString &watchdog, QObject *parent) :
-		QProcess(parent), d(new SuicidalProcessPrivate(watchdog)) {
+SuicidalProcess::SuicidalProcess(QObject *parent) :
+		QProcess(parent), d(new SuicidalProcessPrivate()) {
 	connect(this, SIGNAL(started()), this, SLOT(setSuicidal()));
 }
 
@@ -49,6 +49,10 @@ void SuicidalProcess::setSuicidal() {
 	d->m_watchdog.start(d->m_watchdogCommand,
 			QStringList() << QString::number(QCoreApplication::applicationPid())
 					<< QString::number(pid()));
+}
+
+void SuicidalProcess::setWatchdogCommand(const QString &watchdogCommand) {
+	d->m_watchdogCommand = watchdogCommand;
 }
 
 } /* namespace QtDBusTest */

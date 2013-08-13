@@ -29,8 +29,8 @@ namespace {
 
 class TestSuicidalProcess: public Test {
 protected:
-	TestSuicidalProcess() :
-			process(TEST_QTDBUSTEST_WATCHDOG_BIN) {
+	TestSuicidalProcess() {
+		process.setWatchdogCommand(TEST_QTDBUSTEST_WATCHDOG_BIN);
 	}
 
 	virtual ~TestSuicidalProcess() {

@@ -29,10 +29,11 @@ class SuicidalProcessPrivate;
 class Q_DECL_EXPORT SuicidalProcess: public QProcess {
 Q_OBJECT
 public:
-	explicit SuicidalProcess(const QString &watchdog = QTDBUSTEST_WATCHDOG_BIN,
-			QObject *parent = 0);
+	explicit SuicidalProcess(QObject *parent = 0);
 
 	virtual ~SuicidalProcess();
+
+	void setWatchdogCommand(const QString &watchdogCommand);
 
 protected Q_SLOTS:
 	virtual void setSuicidal();
