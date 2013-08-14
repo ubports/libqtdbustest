@@ -1,3 +1,13 @@
+libqtdbustest (0.1+13.10.20130814-0ubuntu1) saucy; urgency=low
+
+  [ Pete Woods ]
+  * Add more tests.
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 22
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Wed, 14 Aug 2013 02:04:09 +0000
+
 libqtdbustest (0.1+13.10.20130809-0ubuntu1) saucy; urgency=low
 
   [ Pete Woods ]
