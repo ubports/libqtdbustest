@@ -31,7 +31,7 @@ class QProcessDBusServicePrivate;
 
 class Q_DECL_EXPORT QProcessDBusService: public DBusService {
 public:
-	explicit QProcessDBusService(const QString &interface,
+	explicit QProcessDBusService(const QString &name,
 			QDBusConnection::BusType busType, const QString &program,
 			const QStringList &arguments);
 

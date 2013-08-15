@@ -41,10 +41,10 @@ public:
 	QProcess m_process;
 };
 
-QProcessDBusService::QProcessDBusService(const QString &interface,
+QProcessDBusService::QProcessDBusService(const QString &name,
 		QDBusConnection::BusType busType, const QString &program,
 		const QStringList &arguments) :
-		DBusService(interface, busType), p(
+		DBusService(name, busType), p(
 				new QProcessDBusServicePrivate(program, arguments)) {
 }
 

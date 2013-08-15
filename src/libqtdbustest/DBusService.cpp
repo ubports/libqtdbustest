@@ -32,9 +32,9 @@ public:
 	QDBusConnection::BusType m_busType;
 };
 
-DBusService::DBusService(const QString &interface,
+DBusService::DBusService(const QString &name,
 		QDBusConnection::BusType busType) :
-		d(new DBusServicePrivate(interface, busType)) {
+		d(new DBusServicePrivate(name, busType)) {
 }
 
 DBusService::~DBusService() {
