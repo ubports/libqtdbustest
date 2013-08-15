@@ -1,3 +1,13 @@
+libqtdbustest (0.1+13.10.20130815-0ubuntu1) saucy; urgency=low
+
+  [ Pete Woods ]
+  * Rename parameter to be less confusing.
+
+  [ Ubuntu daily release ]
+  * Automatic snapshot from revision 24
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Thu, 15 Aug 2013 14:04:01 +0000
+
 libqtdbustest (0.1+13.10.20130814-0ubuntu1) saucy; urgency=low
 
   [ Pete Woods ]
