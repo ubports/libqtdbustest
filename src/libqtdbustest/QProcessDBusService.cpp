@@ -52,8 +52,9 @@ QProcessDBusService::~QProcessDBusService() {
 	p->m_process.terminate();
 	p->m_process.waitForFinished();
 
-//	p->m_process.waitForReadyRead();
-//	qDebug() << p->m_process.readAll();
+	if(qEnvironmentVariableIsSet("QDBUS_TEST_RUNNER_PROCESS_OUTPUT")) {
+		qDebug() << p->m_process.readAll();
+	}
 }
 
 void QProcessDBusService::start(const QDBusConnection &connection) {
