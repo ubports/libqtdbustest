@@ -46,15 +46,13 @@ QProcessDBusService::QProcessDBusService(const QString &name,
 		const QStringList &arguments) :
 		DBusService(name, busType), p(
 				new QProcessDBusServicePrivate(program, arguments)) {
+	connect(&p->m_process, SIGNAL(finished(int)), this,
+	SLOT(slotFinished(int)));
 }
 
 QProcessDBusService::~QProcessDBusService() {
 	p->m_process.terminate();
 	p->m_process.waitForFinished();
-
-	if(qEnvironmentVariableIsSet("QDBUS_TEST_RUNNER_PROCESS_OUTPUT")) {
-		qDebug() << p->m_process.readAll();
-	}
 }
 
 void QProcessDBusService::start(const QDBusConnection &connection) {
@@ -63,21 +61,34 @@ void QProcessDBusService::start(const QDBusConnection &connection) {
 	QSignalSpy spy(&watcher,
 			SIGNAL(serviceOwnerChanged(const QString &,const QString &,const QString &)));
 
-	p->m_process.setProcessChannelMode(QProcess::MergedChannels);
+	QProcessEnvironment environment(QProcessEnvironment::systemEnvironment());
+	environment.insert("QDBUS_TEST_RUNNER_PARENT", "1");
+	p->m_process.setProcessEnvironment(environment);
+	p->m_process.setProcessChannelMode(QProcess::ForwardedChannels);
 	p->m_process.start(p->m_program, p->m_arguments);
 
-	spy.wait(1000);
-	if (spy.empty()) {
-		p->m_process.waitForReadyRead(50);
-
-		QString error = "Process [" + p->m_program + "] for service [" + name()
-				+ "] failed to start:\n" + p->m_process.readAll();
-		throw std::logic_error(error.toStdString());
+	if (name().isEmpty()) {
+		if (!p->m_process.waitForStarted()) {
+			QString error = "Process [" + p->m_program + "] for service ["
+					+ name() + "] failed to start";
+			throw std::logic_error(error.toStdString());
+		}
+	} else {
+		spy.wait();
+		if (spy.empty()) {
+			QString error = "Process [" + p->m_program + "] for service ["
+					+ name() + "] failed to appear on bus";
+			throw std::logic_error(error.toStdString());
+		}
 	}
 }
 
 Q_PID QProcessDBusService::pid() const {
 	return p->m_process.pid();
+}
+
+void QProcessDBusService::slotFinished(int exitCode) {
+	finished(exitCode);
 }
 
 }

@@ -34,7 +34,7 @@ class TestQProcessDBusService: public Test {
 protected:
 	TestQProcessDBusService() :
 			dbusTestRunner(TEST_DBUS_SESSION_CONFIG_FILE,
-					TEST_DBUS_SYSTEM_CONFIG_FILE) {
+			TEST_DBUS_SYSTEM_CONFIG_FILE) {
 	}
 
 	virtual ~TestQProcessDBusService() {
@@ -45,7 +45,7 @@ protected:
 
 TEST_F(TestQProcessDBusService, WaitsForServiceAppeared) {
 	QProcessDBusService process("test.name", QDBusConnection::SessionBus,
-			"python3",
+			"/usr/bin/python3",
 			QStringList() << "-m" << "dbusmock" << "test.name" << "/test/object"
 					<< "test.Interface");
 
@@ -58,17 +58,19 @@ TEST_F(TestQProcessDBusService, WaitsForServiceAppeared) {
 	pgrep.waitForFinished();
 	pgrep.waitForReadyRead();
 
-	EXPECT_EQ("python3 -m dbusmock test.name /test/object test.Interface",
+	EXPECT_EQ(
+			"/usr/bin/python3 -m dbusmock test.name /test/object test.Interface",
 			QString::fromUtf8(pgrep.readAll().trimmed()).toStdString());
 }
 
 TEST_F(TestQProcessDBusService, ThrowsErrorForFailToStart) {
 	QProcessDBusService process("test.name", QDBusConnection::SessionBus,
-			"python3",
+			"/usr/bin/python3",
 			QStringList() << "-m" << "dbusmock" << "not.test.name"
 					<< "/test/object" << "test.Interface");
 
-	ASSERT_THROW(process.start(dbusTestRunner.sessionConnection()), std::logic_error);
+	ASSERT_THROW(process.start(dbusTestRunner.sessionConnection()),
+			std::logic_error);
 }
 
 } // namespace

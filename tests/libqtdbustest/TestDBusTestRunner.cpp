@@ -32,7 +32,7 @@ class TestDBusTestRunner: public Test {
 protected:
 	TestDBusTestRunner() :
 			dbusTestRunner(TEST_DBUS_SESSION_CONFIG_FILE,
-					TEST_DBUS_SYSTEM_CONFIG_FILE) {
+			TEST_DBUS_SYSTEM_CONFIG_FILE) {
 	}
 
 	virtual ~TestDBusTestRunner() {
@@ -44,7 +44,7 @@ protected:
 TEST_F(TestDBusTestRunner, StartsSessionService) {
 	QSharedPointer<QProcessDBusService> process(
 			new QProcessDBusService("test.session.name",
-					QDBusConnection::SessionBus, "python3",
+					QDBusConnection::SessionBus, "/usr/bin/python3",
 					QStringList() << "-m" << "dbusmock" << "test.session.name"
 							<< "/test/object" << "test.Interface"));
 
@@ -59,14 +59,14 @@ TEST_F(TestDBusTestRunner, StartsSessionService) {
 	pgrep.waitForReadyRead();
 
 	EXPECT_EQ(
-			"python3 -m dbusmock test.session.name /test/object test.Interface",
+			"/usr/bin/python3 -m dbusmock test.session.name /test/object test.Interface",
 			QString::fromUtf8(pgrep.readAll().trimmed()).toStdString());
 }
 
 TEST_F(TestDBusTestRunner, StartsSystemService) {
 	QSharedPointer<QProcessDBusService> process(
 			new QProcessDBusService("test.system.name",
-					QDBusConnection::SystemBus, "python3",
+					QDBusConnection::SystemBus, "/usr/bin/python3",
 					QStringList() << "-m" << "dbusmock" << "-s"
 							<< "test.system.name" << "/test/object"
 							<< "test.Interface"));
@@ -82,7 +82,7 @@ TEST_F(TestDBusTestRunner, StartsSystemService) {
 	pgrep.waitForReadyRead();
 
 	EXPECT_EQ(
-			"python3 -m dbusmock -s test.system.name /test/object test.Interface",
+			"/usr/bin/python3 -m dbusmock -s test.system.name /test/object test.Interface",
 			QString::fromUtf8(pgrep.readAll().trimmed()).toStdString());
 }
 

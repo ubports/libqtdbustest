@@ -30,7 +30,7 @@ class DBusServicePrivate;
 
 typedef QSharedPointer<DBusService> DBusServicePtr;
 
-class Q_DECL_EXPORT DBusService {
+class Q_DECL_EXPORT DBusService: public QObject {
 public:
 	DBusService(const QString &name, QDBusConnection::BusType busType);
 
