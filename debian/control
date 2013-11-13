@@ -25,7 +25,7 @@ Pre-Depends: ${misc:Pre-Depends},
 Depends: dbus,
          ${misc:Depends},
          ${shlibs:Depends},
-Description: Library for testing DBus interations using Qt
+Description: Library for testing DBus interactions using Qt
  A simple library for testing Qt based DBus services and clients.
  .
  This package contains the shared libraries.
@@ -36,7 +36,17 @@ Architecture: any
 Multi-Arch: same
 Depends: libqtdbustest1 (= ${binary:Version}),
          ${misc:Depends},
-Description: Library for testing DBus interations using Qt
+Description: Library for testing DBus interactions using Qt
  A simple library for testing Qt based DBus services and clients.
  .
  This package contains files that are needed to build.
+
+Package: qtdbustest-runner
+Architecture: any
+Depends: libqtdbustest1 (= ${binary:Version}),
+         ${shlibs:Depends},
+         ${misc:Depends},
+         gvfs-backends,
+Description: Library for testing DBus interactions using Qt
+ Simple executable for running a test script under a private
+ DBus environment.

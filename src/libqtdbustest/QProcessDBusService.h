@@ -30,6 +30,7 @@ namespace QtDBusTest {
 class QProcessDBusServicePrivate;
 
 class Q_DECL_EXPORT QProcessDBusService: public DBusService {
+
 public:
 	explicit QProcessDBusService(const QString &name,
 			QDBusConnection::BusType busType, const QString &program,
@@ -40,6 +41,8 @@ public:
 	virtual void start(const QDBusConnection &connection);
 
 	virtual Q_PID pid() const;
+
+	virtual const QProcess & underlyingProcess() const;
 
 private:
 	QScopedPointer<QProcessDBusServicePrivate> p;

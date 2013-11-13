@@ -1,3 +1,10 @@
+libqtdbustest (0.2) UNRELEASED; urgency=low
+
+  * Add qdbus-simple-test-runner binary.
+  * Support running libqtdbustest inside a parent instance.
+
+ -- Pete Woods <pete.woods@canonical.com>  Tue, 12 Nov 2013 23:34:13 +0000
+
 libqtdbustest (0.1+13.10.20130815-0ubuntu1) saucy; urgency=low
 
   [ Pete Woods ]

@@ -47,47 +47,55 @@ DBusTestRunner::DBusTestRunner(const QString &dbusSessionConfigFile,
 		const QString &dbusSystemConfigFile) :
 		d(new DBusTestRunnerPrivate()) {
 
-	// session bus setup
+	// If we are already running inside a QDBus test environment
+	if (qEnvironmentVariableIsSet("QDBUS_TEST_RUNNER_PARENT")) {
+		// session bus setup
+		d->m_sessionBus = QString::fromUtf8(
+				qgetenv("DBUS_SESSION_BUS_ADDRESS"));
+		d->m_sessionConnection = QDBusConnection::sessionBus();
 
-	d->m_sessionDBus.setProcessChannelMode(QProcess::MergedChannels);
-	d->m_sessionDBus.start("dbus-daemon",
-			QStringList() << "--config-file" << dbusSessionConfigFile
-					<< "--print-address");
-	Q_ASSERT(d->m_sessionDBus.waitForStarted());
+		// system bus setup
+		d->m_systemBus = QString::fromUtf8(qgetenv("DBUS_SYSTEM_BUS_ADDRESS"));
+		d->m_systemConnection = QDBusConnection::systemBus();
+	} else {
+		// session bus setup
 
-	d->m_sessionDBus.waitForReadyRead();
-	d->m_sessionBus = d->m_sessionDBus.readAll().trimmed();
+		d->m_sessionDBus.setProcessChannelMode(QProcess::MergedChannels);
+		d->m_sessionDBus.start("dbus-daemon",
+				QStringList() << "--config-file" << dbusSessionConfigFile
+						<< "--print-address");
+		Q_ASSERT(d->m_sessionDBus.waitForStarted());
 
-	qputenv("DBUS_SESSION_BUS_ADDRESS", d->m_sessionBus.toUtf8());
+		d->m_sessionDBus.waitForReadyRead();
+		d->m_sessionBus = d->m_sessionDBus.readAll().trimmed();
 
-	d->m_sessionConnection = QDBusConnection::connectToBus(d->m_sessionBus,
-			d->m_sessionBus);
+		qputenv("DBUS_SESSION_BUS_ADDRESS", d->m_sessionBus.toUtf8());
+		qputenv("DBUS_STARTER_ADDRESS", d->m_sessionBus.toUtf8());
+		qputenv("DBUS_STARTER_BUS_TYPE", "session");
 
-	// system bus setup
+		d->m_sessionConnection = QDBusConnection::connectToBus(d->m_sessionBus,
+				d->m_sessionBus);
 
-	d->m_systemDBus.setProcessChannelMode(QProcess::MergedChannels);
-	d->m_systemDBus.start("dbus-daemon",
-			QStringList() << "--config-file" << dbusSystemConfigFile
-					<< "--print-address");
-	Q_ASSERT(d->m_systemDBus.waitForStarted());
+		// system bus setup
 
-	d->m_systemDBus.waitForReadyRead();
-	d->m_systemBus = d->m_systemDBus.readAll().trimmed();
+		d->m_systemDBus.setProcessChannelMode(QProcess::MergedChannels);
+		d->m_systemDBus.start("dbus-daemon",
+				QStringList() << "--config-file" << dbusSystemConfigFile
+						<< "--print-address");
+		Q_ASSERT(d->m_systemDBus.waitForStarted());
 
-	qputenv("DBUS_SYSTEM_BUS_ADDRESS", d->m_systemBus.toUtf8());
+		d->m_systemDBus.waitForReadyRead();
+		d->m_systemBus = d->m_systemDBus.readAll().trimmed();
 
-	d->m_systemConnection = QDBusConnection::connectToBus(d->m_systemBus,
-			d->m_systemBus);
+		qputenv("DBUS_SYSTEM_BUS_ADDRESS", d->m_systemBus.toUtf8());
+
+		d->m_systemConnection = QDBusConnection::connectToBus(d->m_systemBus,
+				d->m_systemBus);
+	}
 }
 
 DBusTestRunner::~DBusTestRunner() {
 	d->m_services.clear();
-
-	d->m_sessionDBus.terminate();
-	Q_ASSERT(d->m_sessionDBus.waitForFinished());
-
-	d->m_systemDBus.terminate();
-	Q_ASSERT(d->m_systemDBus.waitForFinished());
 }
 
 void DBusTestRunner::registerService(DBusServicePtr service) {
