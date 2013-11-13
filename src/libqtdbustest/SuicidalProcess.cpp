@@ -41,10 +41,10 @@ SuicidalProcess::SuicidalProcess(QObject *parent) :
 }
 
 SuicidalProcess::~SuicidalProcess() {
-	d->m_watchdog.kill();
+	d->m_watchdog.terminate();
 	d->m_watchdog.waitForFinished();
 
-	kill();
+	terminate();
 	waitForFinished();
 }
 
