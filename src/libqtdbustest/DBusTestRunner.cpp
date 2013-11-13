@@ -96,15 +96,6 @@ DBusTestRunner::DBusTestRunner(const QString &dbusSessionConfigFile,
 
 DBusTestRunner::~DBusTestRunner() {
 	d->m_services.clear();
-
-	// If we aren't running inside a QDBus test environment
-	if (qEnvironmentVariableIsEmpty("QDBUS_TEST_RUNNER_PARENT")) {
-		d->m_sessionDBus.terminate();
-		Q_ASSERT(d->m_sessionDBus.waitForFinished());
-
-		d->m_systemDBus.terminate();
-		Q_ASSERT(d->m_systemDBus.waitForFinished());
-	}
 }
 
 void DBusTestRunner::registerService(DBusServicePtr service) {

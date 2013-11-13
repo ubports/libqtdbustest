@@ -16,6 +16,7 @@
  * Author: Pete Woods <pete.woods@canonical.com>
  */
 
+#include <libqtdbustest/SuicidalProcess.h>
 #include <libqtdbustest/QProcessDBusService.h>
 
 #include <QDebug>
@@ -27,7 +28,6 @@
 namespace QtDBusTest {
 
 class QProcessDBusServicePrivate {
-
 public:
 	QProcessDBusServicePrivate(const QString &program,
 			const QStringList &arguments) :
@@ -38,7 +38,7 @@ public:
 
 	QStringList m_arguments;
 
-	QProcess m_process;
+	SuicidalProcess m_process;
 };
 
 QProcessDBusService::QProcessDBusService(const QString &name,
@@ -46,13 +46,9 @@ QProcessDBusService::QProcessDBusService(const QString &name,
 		const QStringList &arguments) :
 		DBusService(name, busType), p(
 				new QProcessDBusServicePrivate(program, arguments)) {
-	connect(&p->m_process, SIGNAL(finished(int)), this,
-	SLOT(slotFinished(int)));
 }
 
 QProcessDBusService::~QProcessDBusService() {
-	p->m_process.terminate();
-	p->m_process.waitForFinished();
 }
 
 void QProcessDBusService::start(const QDBusConnection &connection) {
@@ -87,8 +83,10 @@ Q_PID QProcessDBusService::pid() const {
 	return p->m_process.pid();
 }
 
-void QProcessDBusService::slotFinished(int exitCode) {
-	finished(exitCode);
+const QProcess & QProcessDBusService::underlyingProcess() const {
+	return p->m_process;
+
 }
 
 }
+

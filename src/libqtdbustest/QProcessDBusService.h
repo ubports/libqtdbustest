@@ -30,7 +30,6 @@ namespace QtDBusTest {
 class QProcessDBusServicePrivate;
 
 class Q_DECL_EXPORT QProcessDBusService: public DBusService {
-Q_OBJECT
 
 public:
 	explicit QProcessDBusService(const QString &name,
@@ -43,11 +42,7 @@ public:
 
 	virtual Q_PID pid() const;
 
-Q_SIGNALS:
-	void finished(int exitCode);
-
-protected Q_SLOTS:
-	virtual void slotFinished(int exitCode);
+	virtual const QProcess & underlyingProcess() const;
 
 private:
 	QScopedPointer<QProcessDBusServicePrivate> p;

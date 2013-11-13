@@ -65,8 +65,9 @@ int main(int argc, char **argv) {
 	runner.startServices();
 
 	ExitListener listener;
-	QObject::connect(service.data(), SIGNAL(finished(int)), &listener,
-	SLOT(finished(int)));
+	QObject::connect(&service->underlyingProcess(), SIGNAL(finished(int)),
+			&listener,
+			SLOT(finished(int)));
 
 	return application.exec();
 }
