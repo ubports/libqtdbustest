@@ -21,12 +21,7 @@ libqtdbustest.so.1 libqtdbustest1 #MINVER#
  (c++)"QtDBusTest::SuicidalProcess::~SuicidalProcess()@Base" 0.1
  (c++)"QtDBusTest::SuicidalProcess::~SuicidalProcess()@Base" 0.1
  (c++)"QtDBusTest::SuicidalProcess::~SuicidalProcess()@Base" 0.1
- (c++)"QtDBusTest::QProcessDBusService::qt_metacall(QMetaObject::Call, int, void**)@Base" 0.1
- (c++)"QtDBusTest::QProcessDBusService::qt_metacast(char const*)@Base" 0.1
- (c++)"QtDBusTest::QProcessDBusService::slotFinished(int)@Base" 0.1
- (c++)"QtDBusTest::QProcessDBusService::staticMetaObject@Base" 0.1
  (c++)"QtDBusTest::QProcessDBusService::start(QDBusConnection const&)@Base" 0.1
- (c++)"QtDBusTest::QProcessDBusService::finished(int)@Base" 0.1
  (c++)"QtDBusTest::QProcessDBusService::QProcessDBusService(QString const&, QDBusConnection::BusType, QString const&, QStringList const&)@Base" 0.1
  (c++)"QtDBusTest::QProcessDBusService::QProcessDBusService(QString const&, QDBusConnection::BusType, QString const&, QStringList const&)@Base" 0.1
  (c++)"QtDBusTest::QProcessDBusService::~QProcessDBusService()@Base" 0.1
@@ -39,7 +34,7 @@ libqtdbustest.so.1 libqtdbustest1 #MINVER#
  (c++)"QtDBusTest::DBusTestRunner::sessionConnection() const@Base" 0.1
  (c++)"QtDBusTest::DBusTestRunner::systemBus() const@Base" 0.1
  (c++)"QtDBusTest::SuicidalProcess::metaObject() const@Base" 0.1
- (c++)"QtDBusTest::QProcessDBusService::metaObject() const@Base" 0.1
+ (c++)"QtDBusTest::QProcessDBusService::underlyingProcess() const@Base" 0.2
  (c++)"QtDBusTest::QProcessDBusService::pid() const@Base" 0.1
  (c++)"typeinfo for QtDBusTest::DBusService@Base" 0.1
  (c++)"typeinfo for QtDBusTest::DBusTestRunner@Base" 0.1
