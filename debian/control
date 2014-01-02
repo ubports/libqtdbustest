@@ -8,7 +8,7 @@ Build-Depends: cmake,
                google-mock (>= 1.6.0+svn437),
                pkg-config,
                qtbase5-dev,
-               valgrind,
+               valgrind [!arm64 !ppc64el],
                python3-dbusmock,
                dbus,
 Standards-Version: 3.9.4
