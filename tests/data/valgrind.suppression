@@ -56,3 +56,29 @@
    ...
    obj:*
 }
+
+
+{
+   Valgrind doesn't like dlopens
+   Memcheck:Value4
+   fun:memcpy
+   ...
+   fun:dlopen@@GLIBC_*
+   obj:/usr/lib/*/libQt5Core.so.*
+}
+
+{
+   Valgrind doesn't like dlopens
+   Memcheck:Cond
+   ...
+   fun:dlopen@@GLIBC_*
+   obj:/usr/lib/*/libQt5Core.so.*
+}
+
+{
+   Valgrind doesn't like dlopens
+   Memcheck:Value4
+   fun:_dl_start
+   obj:/lib/*/ld-*.so
+}
+
