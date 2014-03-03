@@ -1,3 +1,12 @@
+libqtdbustest (0.2+14.04.20140303.1-0ubuntu1) trusty; urgency=low
+
+  [ Pete Woods ]
+  * Valgrind is not present on all architectures. (LP: #1263926,
+    #1263925, #1262638)
+  * Valgrind doesn't like dlopens (LP: #1287135)
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Mon, 03 Mar 2014 13:02:05 +0000
+
 libqtdbustest (0.2+14.04.20131128.1-0ubuntu3) trusty; urgency=medium
 
   * Disable the testsuite on i386 for now. See #1262638 and #1263926.
