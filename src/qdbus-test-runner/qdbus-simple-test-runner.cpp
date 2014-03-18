@@ -32,7 +32,10 @@ class ExitListener: public QObject {
 Q_OBJECT
 
 public Q_SLOTS:
-	void finished(int exitCode) {
+	void finished(int exitCode, QProcess::ExitStatus exitStatus) {
+		if (exitStatus == QProcess::CrashExit && exitCode == 0) {
+			exitCode = 1;
+		}
 		QCoreApplication::exit(exitCode);
 	}
 };
@@ -65,9 +68,9 @@ int main(int argc, char **argv) {
 	runner.startServices();
 
 	ExitListener listener;
-	QObject::connect(&service->underlyingProcess(), SIGNAL(finished(int)),
-			&listener,
-			SLOT(finished(int)));
+	QObject::connect(&service->underlyingProcess(),
+			SIGNAL(finished(int, QProcess::ExitStatus)), &listener,
+			SLOT(finished(int, QProcess::ExitStatus)));
 
 	return application.exec();
 }
