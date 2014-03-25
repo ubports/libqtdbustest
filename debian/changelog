@@ -1,3 +1,10 @@
+libqtdbustest (0.2+14.04.20140325-0ubuntu1) trusty; urgency=low
+
+  [ Pete Woods ]
+  * Correctly handle crashing child processes (LP: #1296744)
+
+ -- Ubuntu daily release <ps-jenkins@lists.canonical.com>  Tue, 25 Mar 2014 12:50:21 +0000
+
 libqtdbustest (0.2+14.04.20140303.1-0ubuntu1) trusty; urgency=low
 
   [ Pete Woods ]
