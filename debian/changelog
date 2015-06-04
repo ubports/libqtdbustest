@@ -1,3 +1,10 @@
+libqtdbustest (0.2+15.10.20150604-0ubuntu1) wily; urgency=medium
+
+  [ Pete Woods ]
+  * Fix FTBFS on PPC (LP: #1451507)
+
+ -- CI Train Bot <ci-train-bot@canonical.com>  Thu, 04 Jun 2015 11:03:52 +0000
+
 libqtdbustest (0.2+14.04.20140325-0ubuntu1) trusty; urgency=low
 
   [ Pete Woods ]
