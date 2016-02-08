@@ -70,7 +70,7 @@ void QProcessDBusService::start(const QDBusConnection &connection) {
 			throw std::logic_error(error.toStdString());
 		}
 	} else {
-		spy.wait();
+		spy.wait(15000);
 		if (spy.empty()) {
 			QString error = "Process [" + p->m_program + "] for service ["
 					+ name() + "] failed to appear on bus";
