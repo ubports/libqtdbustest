@@ -27,6 +27,21 @@
 
 namespace QtDBusTest {
 
+namespace {
+	int timeoutInSeconds() {
+		const int defaultTimeout = 15;
+		QByteArray timeoutString = qgetenv("QDBUS_DBUS_START_TIMEOUT");
+		if (!timeoutString.isEmpty()) {
+			bool ok;
+			const int timeout = timeoutString.toInt(&ok);
+			if (ok) {
+				return timeout;
+			}
+		}
+		return defaultTimeout;
+	}
+} // anonymous namespace
+
 class QProcessDBusServicePrivate {
 public:
 	QProcessDBusServicePrivate(const QString &program,
@@ -70,7 +85,7 @@ void QProcessDBusService::start(const QDBusConnection &connection) {
 			throw std::logic_error(error.toStdString());
 		}
 	} else {
-		spy.wait();
+		spy.wait(timeoutInSeconds() * 1000);
 		if (spy.empty()) {
 			QString error = "Process [" + p->m_program + "] for service ["
 					+ name() + "] failed to appear on bus";
