@@ -1,3 +1,11 @@
+libqtdbustest (0.2+16.04.20160216-0ubuntu1) xenial; urgency=medium
+
+  [ Gerry Boland ]
+  * Increase timeout when waiting for mock dbus service to appear on the
+    bus. (LP: #1541854)
+
+ -- Michał Sawicz <michal.sawicz@canonical.com>  Tue, 16 Feb 2016 09:29:55 +0000
+
 libqtdbustest (0.2+15.10.20150918-0ubuntu1) wily; urgency=medium
 
   * Fix building on wily (LP: #1451507)
