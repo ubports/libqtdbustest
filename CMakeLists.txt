@@ -29,7 +29,7 @@ include_directories(${SOURCE_DIR})
 include_directories(${SOURCE_BINARY_DIR})
 
 include(GNUInstallDirs)
-include(Coverage)
+find_package(CoverageReport)
 
 # Workaround for libexecdir on debian
 if (EXISTS "/etc/debian_version") 
@@ -50,23 +50,11 @@ add_definitions(
 	-Wextra
 )
 
-#set(DOXYFILE_SOURCE_DIR "include")
-#set(DOXYFILE_EXTRA_SOURCES "doc")
-#include(UseDoxygen)
-#if(DOXYGEN_FOUND AND BUILD_DOXYGEN)
-#	install(
-#		DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doc/html
-#		DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/libusermetrics-doc/
-#	)
-#endif()
-
 configure_file(
 	"${SOURCE_DIR}/libqtdbustest/config.h.in"
 	"${SOURCE_BINARY_DIR}/libqtdbustest/config.h"
 )
 
-
-#add_subdirectory("po")
 add_subdirectory("src")
 add_subdirectory("data")
 
