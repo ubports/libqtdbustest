@@ -77,5 +77,4 @@ enable_coverage_report(
     ${CMAKE_BINARY_DIR}/*
   TESTS
     unit-tests
-    watchdog
 )
