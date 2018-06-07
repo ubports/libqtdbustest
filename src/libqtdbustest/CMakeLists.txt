@@ -22,11 +22,11 @@ add_library(
 	${QTDBUSTEST_SRC}
 )
 
-qt5_use_modules(
+target_link_libraries(
 	qtdbustest
-	Core
-	DBus
-	Test
+	Qt5::Core
+	Qt5::DBus
+	Qt5::Test
 )
 
 set_target_properties(

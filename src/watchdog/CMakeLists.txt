@@ -5,9 +5,9 @@ add_executable(
 	main.cpp
 )
 
-qt5_use_modules(
+target_link_libraries(
 	watchdog
-	Core
+	Qt5::Core
 )
 
 install(
