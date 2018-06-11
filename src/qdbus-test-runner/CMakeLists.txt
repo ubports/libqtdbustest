@@ -9,9 +9,9 @@ target_link_libraries(
 	qtdbustest
 )
 
-qt5_use_modules(
+target_link_libraries(
 	qdbus-simple-test-runner
-	Core
+	Qt5::Core
 )
 
 install(
